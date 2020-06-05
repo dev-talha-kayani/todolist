@@ -4,56 +4,82 @@ class Lists {
         $lists = ORM::for_table('list')->order_by_asc('t_order')->find_many();
         return $lists;
     }
-    function update($id,$value){
-        $lists = ORM::for_table('lists') ->where(array(
-            'id' => $id
-        ))->find_one();
-        $lists->text=$value;
-        $lists->save();
+    function tester($id,$value){
+        
+        // $lists = ORM::for_table('list') ->where(array(
+        //     'id' => $id
+        // ))->find_one();
+        // $lists->text=$value;
+        // $lists->save();
     }
     function updateclr($color,$id){
-        $lists = ORM::for_table('list') ->where(array(
-            'id' => $id
-        ))->find_one();
-        $lists->color=$color;
-        $lists->save();
+        if ( filter_var($id, FILTER_VALIDATE_INT) === false || empty($id) ||  empty($color)) {
+            echo "variable is not an integer Or is empty";
+        }else{
+          
+            $lists = ORM::for_table('list') ->where(array(
+                'id' => $id
+            ))->find_one();
+            $lists->color=$color;
+            $lists->save();
+        }
     }
     function updatemark($id){
-        $lists = ORM::for_table('list') ->where(array(
-            'id' => $id
-        ))->find_one();
-        $lists->status = "1";
-        $lists->save();
+        if ( filter_var($id, FILTER_VALIDATE_INT) === false || empty($id) ) {
+            echo "variable is not an integer Or is empty";
+        }else{
+            $lists = ORM::for_table('list') ->where(array(
+                'id' => $id
+            ))->find_one();
+            $lists->status = "1";
+            $lists->save();
+        }
     }
     function deletethat($id){
-        $lists = ORM::for_table('list') ->where(array(
-            'id' => $id
-        ))->find_one();
-        $lists->delete();
+        if ( filter_var($id, FILTER_VALIDATE_INT) === false || empty($id) ) {
+            echo "variable is not an integer Or is empty";
+        }else{
+            $lists = ORM::for_table('list') ->where(array(
+                'id' => $id
+            ))->find_one();
+            $lists->delete();
+        }
     }
     function updateposition($position,$id){
-        $lists = ORM::for_table('list') ->where(array(
-            'id' => $id
-        ))->find_one();
-        $lists->t_order = $position;
-        $lists->save();
+        if ( filter_var($id, FILTER_VALIDATE_INT) === false || empty($id) || empty($position) || filter_var($position, FILTER_VALIDATE_INT) === false ) {
+            echo "variable is not an integer Or is empty";
+        }else{
+            $lists = ORM::for_table('list') ->where(array(
+                'id' => $id
+            ))->find_one();
+            $lists->t_order = $position;
+            $lists->save();
+        }
     }
     function updatetext($data,$id){
-        $lists = ORM::for_table('list') ->where(array(
-            'id' => $id
-        ))->find_one();
-        $lists->text = $data;
-        $lists->save();
+        if ( filter_var($id, FILTER_VALIDATE_INT) === false || empty($id) || empty($data) ) {
+            echo "variable is not an integer Or is empty";
+        }else{
+            $lists = ORM::for_table('list') ->where(array(
+                'id' => $id
+            ))->find_one();
+            $lists->text = $data;
+            $lists->save();
+        }
     }
     function insert($value){
-        $lists = ORM::for_table('list')->create();
-        $lists->text = $value;
-        $lists->save();
-        $listMax = ORM::for_table('list')->order_by_desc('id')->find_one();
-        $id = $listMax->id;
-        $listMax->t_order = $id;
-        $listMax->save();
-        return "success";
+        if ( empty($value) ) {
+            echo "variable is not an integer Or is empty";
+        }else{
+            $lists = ORM::for_table('list')->create();
+            $lists->text = $value;
+            $lists->save();
+            $listMax = ORM::for_table('list')->order_by_desc('id')->find_one();
+            $id = $listMax->id;
+            $listMax->t_order = $id;
+            $listMax->save();
+            return "success";
+        }
     }
     function viewallspecified(){
         $lists = ORM::for_table('list')->order_by_asc('t_order')->find_many();

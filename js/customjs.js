@@ -108,7 +108,7 @@ $sortable.sortable({
     }
 });
 })
-$('input').on({
+$('.spandetector').on({
     focus: function() {
         if (!$(this).data('disabled')) this.blur()
     },
